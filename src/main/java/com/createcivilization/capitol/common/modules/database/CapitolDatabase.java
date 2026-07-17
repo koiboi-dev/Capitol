@@ -936,6 +936,24 @@ public class CapitolDatabase extends Database {
 		}
 	}
 
+	public Alliance getAlliance(UUID alliance_id) {
+		try (PreparedStatement ps = getConnection().prepareStatement(
+			"SELECT * FROM alliance WHERE id = ?"
+		)) {
+			ps.setString(1, alliance_id.toString());
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) return Alliance.fromResultSet(rs);
+				return null;
+			}
+		} catch (SQLException e) {
+			Capitol.LOGGER.error("Error while getting alliance from database.", e);
+			throw new RuntimeException(e);
+		}
+	}
+
+	public List<Alliance> getAlliances(UUID alliance_id) {
+		throw new UnsupportedOperationException();
+	}
 
 	//Sable Stuff
 

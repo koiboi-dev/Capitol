@@ -102,6 +102,24 @@ public class DatabaseManager {
 					"FOREIGN KEY (team_id) REFERENCES teams (id) ON DELETE CASCADE)"
 			);
 
+			stmt.execute(
+				"CREATE TABLE IF NOT EXISTS alliance (" +
+					"id TEXT NOT NULL," +
+					"name TEXT NOT NULL," +
+					"tag TEXT NOT NULL," +
+					"team_id TEXT NOT NULL,"+
+					"PRIMARY KEY (id)," +
+					"FOREIGN KEY (team_id) REFERENCES teams (id) ON DELETE CASCADE)"
+			);
+
+			stmt.execute(
+				"CREATE TABLE IF NOT EXISTS alliance_membership (" +
+					"alliance_id TEXT NOT NULL," +
+					"team_id TEXT NOT NULL,"+
+					"FOREIGN KEY (alliance_id) REFERENCES alliance (id) ON DELETE CASCADE,"+
+					"FOREIGN KEY (team_id) REFERENCES teams (id) ON DELETE CASCADE)"
+			);
+
 			if(SableCompat.LOADED){
 				stmt.execute(
 					"CREATE TABLE IF NOT EXISTS sub_levels (" +
